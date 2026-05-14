@@ -3,8 +3,8 @@ spring.jpa.hibernate.ddl-auto=update
 
 spring.datasource.driverClassName=org.postgresql.Driver
 spring.datasource.url=
-spring.datasource.username=postgres
-spring.datasource.password=db
+spring.datasource.username=
+spring.datasource.password=
 
 spring.datasource.hikari.data-source-properties.ssl=true
 spring.datasource.hikari.data-source-properties.sslmode=verify-full
