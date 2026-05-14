@@ -1,7 +1,8 @@
 package jobtrackr_api.controllers;
 
 import jakarta.validation.Valid;
-import jobtrackr_api.models.Company;
+import jobtrackr_api.dtos.CompanyRequestDTO;
+import jobtrackr_api.dtos.CompanyResponseDTO;
 import jobtrackr_api.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,27 +17,26 @@ public class CompanyController {
 
     private CompanyService companyService;
 
-
     @GetMapping
-    public ResponseEntity<List<Company>> listCompanies() {
+    public ResponseEntity<List<CompanyResponseDTO>> listCompanies() {
 
         return ResponseEntity.ok(companyService.listCompanies());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Company> findById(@PathVariable Long id) {
+    public ResponseEntity<CompanyResponseDTO> findById(@PathVariable Long id) {
 
-        Company company = companyService.findById(id);
+        CompanyResponseDTO companyResponseDTO = companyService.findById(id);
 
-        return ResponseEntity.ok(company);
+        return ResponseEntity.ok(companyResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Company> createCompany(@Valid @RequestBody Company company) {
+    public ResponseEntity<CompanyResponseDTO> createCompany(@Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
 
-        companyService.createCompany(company);
+        CompanyResponseDTO companyResponseDTO = companyService.createCompany(companyRequestDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(company);
+        return ResponseEntity.status(HttpStatus.CREATED).body(companyResponseDTO);
     }
 
     @DeleteMapping("/{id}")
