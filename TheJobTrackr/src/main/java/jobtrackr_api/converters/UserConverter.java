@@ -15,7 +15,7 @@ public class UserConverter {
         userResponseDTO.setId(user.getId());
         userResponseDTO.setFirstName(user.getFirstName());
         userResponseDTO.setLastName(user.getLastName());
-        userResponseDTO.setEmail(userResponseDTO.getEmail());
+        userResponseDTO.setEmail(user.getEmail());
 
         return userResponseDTO;
     }
