@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
         if(userRequestDTO == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
-        if(userRepository.findByEmail(userRequestDTO.getEmail()) != null) {
+        if(userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
             throw new UserEmailAlreadyExistsException();
         }
 
