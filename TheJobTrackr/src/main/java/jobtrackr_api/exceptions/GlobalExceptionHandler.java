@@ -41,6 +41,24 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleUserNotFoundException(
+            UserNotFoundException ex, WebRequest webRequest) {
+
+        Map<String, Object> body = createErrorBody(HttpStatus.CONFLICT, ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UserEmailAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserEmailAlreadyExistsException(
+            UserEmailAlreadyExistsException ex, WebRequest webRequest) {
+
+        Map<String, Object> body = createErrorBody(HttpStatus.CONFLICT, ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
 
     private Map<String, Object> createErrorBody(HttpStatus status, String message) {
         Map<String, Object> body = new LinkedHashMap<>();
