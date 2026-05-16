@@ -1,5 +1,6 @@
 package jobtrackr_api.services;
 
+import jobtrackr_api.exceptions.InvalidStatusException;
 import jobtrackr_api.models.JobApplication;
 import jobtrackr_api.converters.JobApplicationConverter;
 import jobtrackr_api.dtos.JobApplicationRequestDTO;
@@ -42,17 +43,43 @@ public class JobApplicationImpl implements JobApplication {
 
     @Override
     public JobApplicationResponseDTO createApplication(JobApplicationRequestDTO jobApplicationRequestDTO) {
-        return null;
+        if(jobApplicationRequestDTO == null) {
+            throw new IllegalArgumentException("Job Application cannot be null");
+        }
+        JobApplication jobApplication = jobApplicationConverter.toRequestDTO(jobApplicationRequestDTO);
+
+        jobApplicationRepository.save(jobApplication);
+
+        return jobApplicationConverter.toResponseDTO(jobApplication);
     }
 
     @Override
-    public JobApplicationResponseDTO updateStatus(JobStatus newStatus) {
-        return null;
+    public JobApplicationResponseDTO updateStatus(JobApplicationRequestDTO jobApplicationRequestDTO, JobStatus newStatus) {
+        if(newStatus == null) {
+            throw new IllegalArgumentException("Job status must be valid");
+        }
+        if(jobApplicationRequestDTO == null) {
+            throw new IllegalArgumentException("Job application must be valid");
+        }
+
+        if(!jobApplicationRequestDTO.getJobStatus().canTransitionTo(newStatus)) {
+            throw new InvalidStatusException();
+        }
+
+        jobApplicationRequestDTO.setJobStatus(newStatus);
+
+        JobApplication jobApplication = jobApplicationConverter.toRequestDTO(jobApplicationRequestDTO);
+
+        return jobApplicationConverter.toResponseDTO(jobApplication);
     }
 
     @Override
     public void deleteById(Long id) {
+        if(id <= 0) {
+            throw new IllegalArgumentException("Id must be positive");
+        }
 
+        return jobApplicationRepository.deleteById(findById(id).getId());
     }
 
 
