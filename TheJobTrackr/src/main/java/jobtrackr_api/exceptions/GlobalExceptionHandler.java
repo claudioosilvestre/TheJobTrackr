@@ -59,6 +59,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    public ResponseEntity<Object> handleJobApplicationNotFoundException(
+            JobApplicationNotFoundException ex, WebRequest webRequest) {
+
+        Map<String, Object> body = createErrorBody(HttpStatus.NOT_FOUND, ex.getMessage());
+
+        return new ResponseEntity<Object>(body, HttpStatus.NOT_FOUND);
+    }
+
 
     private Map<String, Object> createErrorBody(HttpStatus status, String message) {
         Map<String, Object> body = new LinkedHashMap<>();
