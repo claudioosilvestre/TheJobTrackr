@@ -45,9 +45,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleUserNotFoundException(
             UserNotFoundException ex, WebRequest webRequest) {
 
-        Map<String, Object> body = createErrorBody(HttpStatus.CONFLICT, ex.getMessage());
+        Map<String, Object> body = createErrorBody(HttpStatus.NOT_FOUND, ex.getMessage());
 
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserEmailAlreadyExistsException.class)
@@ -59,12 +59,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(JobApplicationNotFoundException.class)
     public ResponseEntity<Object> handleJobApplicationNotFoundException(
             JobApplicationNotFoundException ex, WebRequest webRequest) {
 
         Map<String, Object> body = createErrorBody(HttpStatus.NOT_FOUND, ex.getMessage());
 
         return new ResponseEntity<Object>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidStatusException.class)
+    public ResponseEntity<Object> handleInvalidStatusException(
+            InvalidStatusException ex, WebRequest webRequest) {
+
+        Map<String, Object> body = createErrorBody(HttpStatus.BAD_REQUEST, ex.getMessage());
+
+        return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
     }
 
 
