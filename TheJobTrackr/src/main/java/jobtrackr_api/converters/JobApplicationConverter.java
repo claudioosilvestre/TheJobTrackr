@@ -29,8 +29,6 @@ public class JobApplicationConverter {
         jobApplication.setPosition(jobApplicationRequestDTO.getPosition());
         jobApplication.setJobStatus(jobApplicationRequestDTO.getJobStatus());
         jobApplication.setNotes(jobApplicationRequestDTO.getNotes());
-        jobApplication.setUser(jobApplicationRequestDTO.getUser());
-        jobApplication.setCompany(jobApplicationRequestDTO.getCompany());
 
         return jobApplication;
     }

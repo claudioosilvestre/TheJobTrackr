@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/jobapplication")
+@RequestMapping("/job-applications")
 public class JobApplicationController {
 
     private JobApplicationService jobApplicationService;
-    private JobApplicationConverter jobApplicationConverter;
 
     @GetMapping
     public ResponseEntity<List<JobApplicationResponseDTO>> listAll() {
@@ -42,15 +41,16 @@ public class JobApplicationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(jobApplicationResponseDTO);
     }
 
-    @PatchMapping
-    public ResponseEntity<JobApplicationResponseDTO> updateStatus(@Valid @RequestBody JobApplicationRequestDTO jobApplicationRequestDTO, @RequestBody JobStatus jobStatus) {
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<JobApplicationResponseDTO> updateStatus(@PathVariable Long id, @RequestBody JobStatus jobStatus) {
 
-        JobApplicationResponseDTO jobApplicationResponseDTO = jobApplicationService.updateStatus(jobApplicationRequestDTO, jobStatus);
+
+        JobApplicationResponseDTO jobApplicationResponseDTO = jobApplicationService.updateStatus(id, jobStatus);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(jobApplicationResponseDTO);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJobApplicationById(@PathVariable Long id) {
 
         jobApplicationService.deleteById(id);
@@ -58,11 +58,6 @@ public class JobApplicationController {
         return ResponseEntity.noContent().build();
     }
 
-
-    @Autowired
-    public void setJobApplicationConverter(JobApplicationConverter jobApplicationConverter) {
-        this.jobApplicationConverter = jobApplicationConverter;
-    }
 
     @Autowired
     public void setJobApplicationService(JobApplicationService jobApplicationService) {
