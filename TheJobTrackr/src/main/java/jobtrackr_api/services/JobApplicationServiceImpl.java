@@ -1,11 +1,11 @@
 package jobtrackr_api.services;
 
 import jobtrackr_api.exceptions.InvalidStatusException;
-import jobtrackr_api.models.JobApplication;
 import jobtrackr_api.converters.JobApplicationConverter;
 import jobtrackr_api.dtos.JobApplicationRequestDTO;
 import jobtrackr_api.dtos.JobApplicationResponseDTO;
 import jobtrackr_api.exceptions.JobApplicationNotFoundException;
+import jobtrackr_api.models.JobApplication;
 import jobtrackr_api.models.JobStatus;
 import jobtrackr_api.repositories.JobApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class JobApplicationImpl implements JobApplication {
+public class JobApplicationServiceImpl implements JobApplicationService {
 
     private JobApplicationRepository jobApplicationRepository;
     private JobApplicationConverter jobApplicationConverter;
@@ -79,7 +79,7 @@ public class JobApplicationImpl implements JobApplication {
             throw new IllegalArgumentException("Id must be positive");
         }
 
-        return jobApplicationRepository.deleteById(findById(id).getId());
+        jobApplicationRepository.deleteById(findById(id).getId());
     }
 
 

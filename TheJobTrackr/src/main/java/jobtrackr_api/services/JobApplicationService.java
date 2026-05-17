@@ -6,7 +6,7 @@ import jobtrackr_api.models.JobStatus;
 
 import java.util.List;
 
-public interface JobApplication {
+public interface JobApplicationService {
 
     List<JobApplicationResponseDTO> listApplications();
 
