@@ -7,6 +7,7 @@ import jobtrackr_api.models.JobApplication;
 import jobtrackr_api.models.JobStatus;
 import jobtrackr_api.models.User;
 import jobtrackr_api.repositories.JobApplicationRepository;
+import jobtrackr_api.exceptions.InvalidStatusException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
