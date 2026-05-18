@@ -4,3 +4,5 @@ spring.jpa.hibernate.ddl-auto=update
 spring.datasource.url=jdbc:postgresql://localhost:5432/jobtrackr
 spring.datasource.username=postgres
 spring.datasource.password=password
+
+gemini.api.key=YOUR_GEMINI_API_KEY
