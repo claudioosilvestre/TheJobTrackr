@@ -68,4 +68,31 @@ public class JobApplicationServiceImplTest {
         verify(jobApplicationRepository).save(jobApplication);
     }
 
+
+    @Test
+    public void updateStatus_withInvalidData_shouldReturnInvalidStatusException() {
+
+        Company company = new Company();
+        company.setName("Google");
+        company.setIndustry("Technology");
+        company.setWebsite("https://google.com");
+
+        User user = new User();
+        user.setFirstName("João");
+        user.setLastName("António");
+        user.setEmail("joaoantonio@email.com");
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setCompany(company);
+        jobApplication.setUser(user);
+        jobApplication.setPosition("Programmer");
+        jobApplication.setNotes("Testing code");
+
+        when(jobApplicationRepository.findById(1L)).thenReturn(Optional.of(jobApplication));
+
+        assertThrows(InvalidStatusException.class, () -> {
+            jobApplicationServiceImpl.updateStatus(1L, JobStatus.OFFER);
+        });
+    }
+
 }
