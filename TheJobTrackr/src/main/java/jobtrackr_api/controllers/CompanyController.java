@@ -1,5 +1,9 @@
 package jobtrackr_api.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
 import jakarta.validation.Valid;
 import jobtrackr_api.dtos.CompanyRequestDTO;
 import jobtrackr_api.dtos.CompanyResponseDTO;
@@ -11,18 +15,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Companies", description = "Manage job application companies")
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
 
     private CompanyService companyService;
 
+    @Operation(summary = "List all the companies")
     @GetMapping
     public ResponseEntity<List<CompanyResponseDTO>> listCompanies() {
 
         return ResponseEntity.ok(companyService.listCompanies());
     }
 
+    @Operation(summary = "Find company by id")
     @GetMapping("/{id}")
     public ResponseEntity<CompanyResponseDTO> findById(@PathVariable Long id) {
 
@@ -31,6 +38,7 @@ public class CompanyController {
         return ResponseEntity.ok(companyResponseDTO);
     }
 
+    @Operation(summary = "Create a new company")
     @PostMapping
     public ResponseEntity<CompanyResponseDTO> createCompany(@Valid @RequestBody CompanyRequestDTO companyRequestDTO) {
 
@@ -39,6 +47,7 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(companyResponseDTO);
     }
 
+    @Operation(summary = "Delete company by id")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
 
