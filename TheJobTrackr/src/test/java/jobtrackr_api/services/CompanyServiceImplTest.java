@@ -37,6 +37,26 @@ public class CompanyServiceImplTest {
     }
 
     @Test
+    public void listAllCompanies() {
+
+        Company company = new Company();
+        company.setName("Google");
+
+        CompanyResponseDTO dto = new CompanyResponseDTO();
+        dto.setName("Google");
+
+        when(companyRepository.findAll()).thenReturn(List.of(company));
+        when(companyConverter.toResponseDTO(company)).thenReturn(dto);
+
+        List<CompanyResponseDTO> result = companyServiceImpl.listCompanies();
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Google", result.get(0).getName());
+
+    }
+
+    @Test
     public void createCompany_withValidData_ShouldReturnResponseDTO() {
 
         CompanyRequestDTO companyRequestDTO = new CompanyRequestDTO();
@@ -112,6 +132,17 @@ public class CompanyServiceImplTest {
         assertThrows(CompanyNotFoundException.class, () -> {
             companyServiceImpl.findById(1L);
         });
+    }
+
+    @Test
+    public void deleteById_withValidData() {
+        Company company = new Company();
+
+        when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
+
+        companyServiceImpl.deleteById(1L);
+
+        verify(companyRepository).deleteById(1L);
     }
 
 }
