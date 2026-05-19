@@ -88,6 +88,7 @@
 *   **DTO & Converter Pattern:** Separating internal entities from external API communication using DTOs and converters.
 
 ## Future Improvements
+- [ ] Add more tests
 - [ ] Authentication & authorization
 - [ ] JWT security implementation
 - [ ] Frontend integration
