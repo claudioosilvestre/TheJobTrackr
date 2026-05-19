@@ -52,7 +52,7 @@ public class GeminiServiceImpl implements GeminiService {
         );
 
         String response = restClient.post()
-                .uri("/v1beta/models/gemini-2.0-flash:generateContent?key=" + apiKey)
+                .uri("/v1beta/models/gemini-2.0-flash-lite:generateContent?key=" + apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(body)
                 .retrieve()
