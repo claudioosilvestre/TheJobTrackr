@@ -52,6 +52,7 @@ public class JobApplicationServiceImplTest {
         jobApplication.setUser(user);
         jobApplication.setPosition("Programmer");
         jobApplication.setNotes("Testing code");
+        jobApplication.setJobStatus(JobStatus.APPLIED);
 
         JobApplicationResponseDTO jobApplicationResponseDTO = new JobApplicationResponseDTO();
         jobApplicationResponseDTO.setId(jobApplication.getId());
@@ -61,6 +62,7 @@ public class JobApplicationServiceImplTest {
         jobApplicationResponseDTO.setCompany(jobApplication.getCompany());
         jobApplicationResponseDTO.setJobStatus(jobApplication.getJobStatus());
 
+        
         when(jobApplicationRepository.findById(1L)).thenReturn(Optional.of(jobApplication));
         when(jobApplicationConverter.toResponseDTO(jobApplication)).thenReturn(jobApplicationResponseDTO);
 
@@ -89,6 +91,8 @@ public class JobApplicationServiceImplTest {
         jobApplication.setUser(user);
         jobApplication.setPosition("Programmer");
         jobApplication.setNotes("Testing code");
+
+        jobApplication.setJobStatus(JobStatus.APPLIED);
 
         when(jobApplicationRepository.findById(1L)).thenReturn(Optional.of(jobApplication));
 
