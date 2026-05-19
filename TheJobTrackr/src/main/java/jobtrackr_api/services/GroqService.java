@@ -1,7 +1,7 @@
 package jobtrackr_api.services;
 
 
-public interface GeminiService {
+public interface GroqService {
 
     String analyzeCompatibility(String jobDescription, String position);
 }

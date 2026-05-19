@@ -3,7 +3,7 @@ package jobtrackr_api.controllers;
 import jakarta.validation.Valid;
 import jobtrackr_api.dtos.AnalyzeRequestDTO;
 import jobtrackr_api.dtos.JobApplicationResponseDTO;
-import jobtrackr_api.services.GeminiService;
+import jobtrackr_api.services.GroqService;
 import jobtrackr_api.services.JobApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/job-applications")
-public class GeminiController {
+public class GroqController {
 
-    private GeminiService geminiService;
+    private GroqService groqService;
     private JobApplicationService jobApplicationService;
 
     @PostMapping("/{id}/analyze")
@@ -21,7 +21,7 @@ public class GeminiController {
         
         JobApplicationResponseDTO jobApplicationResponseDTO  = jobApplicationService.findById(id);
         
-        String result = geminiService.analyzeCompatibility(analyzeRequestDTO.getJobDescription(), jobApplicationResponseDTO.getPosition());
+        String result = groqService.analyzeCompatibility(analyzeRequestDTO.getJobDescription(), jobApplicationResponseDTO.getPosition());
 
         return ResponseEntity.ok(result);
     }
@@ -32,7 +32,7 @@ public class GeminiController {
     }
 
     @Autowired
-    public void setGeminiService(GeminiService geminiService) {
-        this.geminiService = geminiService;
+    public void setGroqService(GroqService groqService) {
+        this.groqService = groqService;
     }
 }

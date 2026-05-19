@@ -1,5 +1,7 @@
 package jobtrackr_api.dtos;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class AnalyzeRequestDTO {
     
     @NotBlank
