@@ -5,12 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-public class GeminiConfig {
+public class GroqConfig {
 
     @Bean
-    public RestClient geminiRestClient() {
+    public RestClient groqRestClient() {
         return RestClient.builder()
-                .baseUrl("https://generativelanguage.googleapis.com")
+                .baseUrl("https://api.groq.com")
                 .build();
     }
 }

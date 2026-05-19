@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class GeminiServiceImpl implements GeminiService {
+public class GroqServiceImpl implements GroqService {
 
     private static final String PROMPT_TEMPLATE ="Act as a Senior Tech Recruiter / HR Business Partner. I need you to analyze the compatibility between a specific Candidate Profile (Job Title/Resume summary) and a Job Description. \n" +
             "\n" +
@@ -33,7 +33,7 @@ public class GeminiServiceImpl implements GeminiService {
 
     private RestClient restClient;
 
-    @Value("${gemini.api.key}")
+    @Value("${groq.api.key}")
     private String apiKey;
 
     @Override
@@ -44,15 +44,16 @@ public class GeminiServiceImpl implements GeminiService {
                 .replace("(Paste the job responsibilities, mandatory requirements, and preferred skills here)", jobDescription);
 
         Map<String, Object> body = Map.of(
-                "contents", List.of(
-                        Map.of("parts", List.of(
-                                Map.of("text", prompt)
-                        ))
+                "model", "llama-3.1-8b-instant",
+                "messages", List.of(
+                Map.of("role", "user", "content", prompt)
                 )
         );
 
+
         String response = restClient.post()
-                .uri("/v1beta/models/gemini-2.0-flash-lite:generateContent?key=" + apiKey)
+                .uri("/openai/v1/chat/completions")
+                .header("Authorization", "Bearer " + apiKey)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(body)
                 .retrieve()
