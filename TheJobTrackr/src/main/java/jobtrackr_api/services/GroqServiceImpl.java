@@ -6,6 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +63,13 @@ public class GroqServiceImpl implements GroqService {
                 .retrieve()
                 .body(String.class);
 
-        return response;
+        try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode root = objectMapper.readTree(response);
+                return root.path("choices").get(0).path("message").path("content").asText();
+        } catch (JsonProcessingException e) {
+                throw new RuntimeException("Error parsing Groq response", e);
+        }
     }
 
     @Autowired
