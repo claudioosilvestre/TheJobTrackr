@@ -139,6 +139,10 @@ public class CompanyServiceImplTest {
     public void deleteById_withValidData() {
         Company company = new Company();
 
+        CompanyResponseDTO dto = new CompanyResponseDTO();
+        dto.setId(1L);
+
+        when(companyConverter.toResponseDTO(company)).thenReturn(dto);
         when(companyRepository.findById(1L)).thenReturn(Optional.of(company));
 
         companyServiceImpl.deleteById(1L);
