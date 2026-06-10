@@ -10,13 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/job-applications")
+@RequestMapping("/analysis")
 public class GroqController {
 
     private GroqService groqService;
     private JobApplicationService jobApplicationService;
 
-    @PostMapping("/{id}/analyze")
+    public GroqController(GroqService groqService, JobApplicationService jobApplicationService) {
+        this.groqService = groqService;
+        this.jobApplicationService = jobApplicationService;
+    }
+
+    @PostMapping("/{id}")
     public ResponseEntity<String> analyzeJobCompatibility(@PathVariable Long id, @Valid @RequestBody AnalyzeRequestDTO analyzeRequestDTO) {
         
         JobApplicationResponseDTO jobApplicationResponseDTO  = jobApplicationService.findById(id);
@@ -24,15 +29,5 @@ public class GroqController {
         String result = groqService.analyzeCompatibility(analyzeRequestDTO.getJobDescription(), jobApplicationResponseDTO.getPosition());
 
         return ResponseEntity.ok(result);
-    }
-
-    @Autowired
-    public void setJobApplicationService(JobApplicationService jobApplicationService) {
-        this.jobApplicationService = jobApplicationService;
-    }
-
-    @Autowired
-    public void setGroqService(GroqService groqService) {
-        this.groqService = groqService;
     }
 }
