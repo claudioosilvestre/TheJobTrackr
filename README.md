@@ -97,7 +97,6 @@
 - [ ] CV upload support
 - [ ] Interview scheduling
 - [ ] AI-powered job matching
-- [ ] Docker deployment
 - [ ] CI/CD pipeline
 
 ## Authors
