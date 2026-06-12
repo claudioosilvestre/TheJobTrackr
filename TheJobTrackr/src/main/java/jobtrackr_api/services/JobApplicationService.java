@@ -15,6 +15,8 @@ public interface JobApplicationService {
     JobApplicationResponseDTO createApplication(JobApplicationRequestDTO jobApplicationRequestDTO);
 
     JobApplicationResponseDTO updateStatus(Long id, JobStatus newStatus);
+    
+    ApplicationStatsResponseDTO getApplicationStats();
 
     void deleteById(Long id);
 }

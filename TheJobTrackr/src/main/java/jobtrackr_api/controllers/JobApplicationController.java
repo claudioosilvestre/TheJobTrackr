@@ -58,6 +58,14 @@ public class JobApplicationController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(jobApplicationResponseDTO);
     }
 
+    @Operation(summary = "List job applications status")
+    @GetMapping("/stats")
+    public ResponseEntity<ApplicationStatsResponseDTO> listApplicationStats() {
+
+        return ResponseEntity.ok(jobApplicationService.getApplicationStats());
+    }
+
+
     @Operation(summary = "Delete job application by id")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteJobApplicationById(@PathVariable Long id) {
