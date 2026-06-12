@@ -97,6 +97,23 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
+    public ApplicationStatsResponseDTO getApplicationStats() {
+
+        Map<JobStatus, Long> countByStatus = jobApplicationRepository.findAll()
+                .stream()
+                .collect(Collectors.groupingBy(jobApplication -> jobApplication.getJobStatus(), Collectors.counting()));
+
+        Long total = countByStatus.values().stream()
+                .mapToLong(count -> count).sum();
+
+        ApplicationStatsResponseDTO applicationStatusResponseDTO = new ApplicationStatsResponseDTO();
+        applicationStatusResponseDTO.setCountByStatus(countByStatus);
+        applicationStatusResponseDTO.setTotalApplications(total);
+
+        return applicationStatusResponseDTO;
+    }
+
+    @Override
     public void deleteById(Long id) {
         if(id <= 0) {
             throw new IllegalArgumentException("Id must be positive");
