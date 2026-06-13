@@ -37,6 +37,10 @@ public class GroqServiceImpl implements GroqService {
 
     private RestClient restClient;
 
+    public GroqServiceImpl(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
     @Value("${groq.api.key}")
     private String apiKey;
 
@@ -70,10 +74,5 @@ public class GroqServiceImpl implements GroqService {
         } catch (JsonProcessingException e) {
                 throw new RuntimeException("Error parsing Groq response", e);
         }
-    }
-
-    @Autowired
-    public void setRestClient(RestClient restClient) {
-        this.restClient = restClient;
     }
 }

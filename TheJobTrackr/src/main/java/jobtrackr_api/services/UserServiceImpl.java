@@ -7,8 +7,8 @@ import jobtrackr_api.exceptions.UserEmailAlreadyExistsException;
 import jobtrackr_api.exceptions.UserNotFoundException;
 import jobtrackr_api.models.User;
 import jobtrackr_api.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +17,11 @@ public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
     private UserConverter userConverter;
+
+    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter) {
+        this.userRepository = userRepository;
+        this.userConverter = userConverter;
+    }
 
     @Override
     public List<UserResponseDTO> listAll() {
@@ -39,6 +44,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         if(userRequestDTO == null) {
             throw new IllegalArgumentException("User cannot be null");
@@ -55,6 +61,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         if(id <= 0) {
             throw new IllegalArgumentException("Id must be positive");
@@ -62,15 +69,5 @@ public class UserServiceImpl implements UserService{
 
         userRepository.deleteById(findById(id).getId());
 
-    }
-
-    @Autowired
-    public void setUserConverter(UserConverter userConverter) {
-        this.userConverter = userConverter;
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
     }
 }

@@ -7,8 +7,8 @@ import jobtrackr_api.exceptions.CompanyAlreadyExistsException;
 import jobtrackr_api.exceptions.CompanyNotFoundException;
 import jobtrackr_api.models.Company;
 import jobtrackr_api.repositories.CompanyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +18,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     private CompanyRepository companyRepository;
     private CompanyConverter companyConverter;
+
+    public CompanyServiceImpl(CompanyConverter companyConverter, CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+        this.companyConverter = companyConverter;
+    }
 
     @Override
     public List<CompanyResponseDTO> listCompanies() {
@@ -30,6 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional
     public CompanyResponseDTO createCompany(CompanyRequestDTO companyRequestDTO) {
         if (companyRequestDTO == null) {
             throw new IllegalArgumentException("Company cannot be null");
@@ -58,22 +64,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         if(id <= 0) {
             throw new IllegalArgumentException("Id must be positive");
         }
 
-
         companyRepository.deleteById(findById(id).getId());
-    }
-
-    @Autowired
-    public void setCompanyRepository(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
-
-    @Autowired
-    public void setCompanyConverter(CompanyConverter companyConverter) {
-        this.companyConverter = companyConverter;
     }
 }
