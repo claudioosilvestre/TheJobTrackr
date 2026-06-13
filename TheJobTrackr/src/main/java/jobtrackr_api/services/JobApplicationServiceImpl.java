@@ -104,6 +104,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 
         Map<JobStatus, Long> countByStatus = jobApplicationRepository.findAll()
                 .stream()
+                .filter(jobApplication -> jobApplication.getJobStatus() != null)
                 .collect(Collectors.groupingBy(jobApplication -> jobApplication.getJobStatus(), Collectors.counting()));
 
         Long total = countByStatus.values().stream()
