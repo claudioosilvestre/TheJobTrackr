@@ -1,5 +1,6 @@
 package jobtrackr_api.services;
 
+import jobtrackr_api.dtos.ApplicationStatsResponseDTO;
 import jobtrackr_api.exceptions.CompanyNotFoundException;
 import jobtrackr_api.exceptions.InvalidStatusException;
 import jobtrackr_api.converters.JobApplicationConverter;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class JobApplicationServiceImpl implements JobApplicationService {

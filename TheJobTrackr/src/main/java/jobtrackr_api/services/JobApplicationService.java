@@ -1,5 +1,6 @@
 package jobtrackr_api.services;
 
+import jobtrackr_api.dtos.ApplicationStatsResponseDTO;
 import jobtrackr_api.dtos.JobApplicationRequestDTO;
 import jobtrackr_api.dtos.JobApplicationResponseDTO;
 import jobtrackr_api.models.JobStatus;
