@@ -15,8 +15,8 @@ import jobtrackr_api.models.User;
 import jobtrackr_api.repositories.CompanyRepository;
 import jobtrackr_api.repositories.JobApplicationRepository;
 import jobtrackr_api.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +29,13 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     private JobApplicationConverter jobApplicationConverter;
     private UserRepository userRepository;
     private CompanyRepository companyRepository;
+
+    public JobApplicationServiceImpl(JobApplicationRepository jobApplicationRepository, JobApplicationConverter jobApplicationConverter, UserRepository userRepository, CompanyRepository companyRepository) {
+        this.jobApplicationRepository = jobApplicationRepository;
+        this.jobApplicationConverter = jobApplicationConverter;
+        this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
+    }
 
     @Override
     public List<JobApplicationResponseDTO> listApplications() {
@@ -53,6 +60,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
+    @Transactional
     public JobApplicationResponseDTO createApplication(JobApplicationRequestDTO jobApplicationRequestDTO) {
         if(jobApplicationRequestDTO == null) {
             throw new IllegalArgumentException("Job Application cannot be null");
@@ -76,6 +84,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
+    @Transactional
     public JobApplicationResponseDTO updateStatus(Long id, JobStatus newStatus) {
         if(id <= 0) {
             throw new IllegalArgumentException("Id must be positive");
@@ -118,31 +127,12 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         if(id <= 0) {
             throw new IllegalArgumentException("Id must be positive");
         }
 
         jobApplicationRepository.deleteById(findById(id).getId());
-    }
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @Autowired
-    public void setCompanyRepository(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
-
-    @Autowired
-    public void setJobApplicationConverter(JobApplicationConverter jobApplicationConverter) {
-        this.jobApplicationConverter = jobApplicationConverter;
-    }
-
-    @Autowired
-    public void setJobApplicationRepository(JobApplicationRepository jobApplicationRepository) {
-        this.jobApplicationRepository = jobApplicationRepository;
     }
 }
