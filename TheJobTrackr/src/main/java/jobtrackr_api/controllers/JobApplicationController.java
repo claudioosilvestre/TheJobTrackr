@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.Valid;
 import jobtrackr_api.converters.JobApplicationConverter;
+import jobtrackr_api.dtos.ApplicationStatsResponseDTO;
 import jobtrackr_api.dtos.JobApplicationRequestDTO;
 import jobtrackr_api.dtos.JobApplicationResponseDTO;
 import jobtrackr_api.models.JobStatus;
