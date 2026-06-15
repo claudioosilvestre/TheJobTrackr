@@ -77,6 +77,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGenericException(
+            Exception ex, WebRequest webRequest) {
+
+        Map<String, Object> body = createErrorBody(HttpStatus.INTERNAL_SERVER_ERROR , ex.getMessage());
+
+        return new ResponseEntity<Object>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     private Map<String, Object> createErrorBody(HttpStatus status, String message) {
         Map<String, Object> body = new LinkedHashMap<>();
