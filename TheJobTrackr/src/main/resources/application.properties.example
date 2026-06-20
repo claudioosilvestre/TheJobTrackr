@@ -1,9 +1,0 @@
-spring.jpa.show-sql=false
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-
-spring.datasource.url=jdbc:postgresql://localhost:5432/jobtrackr
-spring.datasource.username=postgres
-spring.datasource.password=password
-
-groq.api.key=YOUR_GROQ_API_KEY
