@@ -2,6 +2,11 @@
 
 **The Job Trackr** is a RESTful API designed to simplify and organize the job application process. The platform allows users to manage companies, track job applications, monitor application statuses, and centralize all relevant job search information in a structured and scalable backend system.
 
+## Live Demo
+🔗 **API live at:** [https://thejobtrackr.onrender.com](https://thejobtrackr.onrender.com)
+ 
+> Note: hosted on Render's free tier — the service may take a few seconds to wake up after periods of inactivity.
+
 ## Tech Stack
 - **Backend:** Java 21, Spring Boot, Spring Data JPA, Hibernate, Rest APIs
 - **AI Integration:** Groq AI
@@ -9,6 +14,8 @@
 - **Documentation:** Swagger/OpenAPI
 - **Testing:** JUnit, Mockito, JUnitParams
 - **Build Tool:** Maven
+- **Deployment:** Docker, Render
+
 ## Getting Started
 
 ### Prerequisites
@@ -36,25 +43,27 @@
     ```bash
     application.properties
     ```
-3.  **Configure application.properties:** 
+4.  **Configure application.properties:** 
     ```bash
     Update the following fields in src/main/resources/application.properties:
     
-    - DATABASE
-    spring.datasource.url=jdbc:postgresql://localhost:5432/thejobtrackr
-    spring.datasource.username=your_username
-    spring.datasource.password=your_password
-
+        - DATABASE
+    spring.datasource.url=jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    spring.datasource.username=${PGUSER}
+    spring.datasource.password=${PGPASSWORD}
+ 
     - GROQ API CONFIGURATION
-    groq.api.key=your_groq_api_key
+    groq.api.key=${GROQ_KEY}
     ```
-4.  **Run the application:**
+     > These values are read from environment variables. Set them locally (e.g. via your IDE's Run Configuration) or export them in your shell before running the app.
+     
+5.  **Run the application:**
     ```bash
     mvn spring-boot:run
     ```
-5.  **Open your browser and go to http://localhost:8080**
+6.  **Open your browser and go to http://localhost:8080**
 
-6.  **Swagger Documentation:**
+7.  **Swagger Documentation:**
     After starting the application, access Swagger UI:
     ```bash
     http://localhost:8080/swagger-ui.html
@@ -66,11 +75,23 @@
 
 > **Note:** All database tables are created automatically on the first run (spring.jpa.hibernate.ddl-auto=update).
 
+### Running with Docker
+The project includes a multi-stage `Dockerfile` for containerized builds and deployment:
+```bash
+docker build -t thejobtrackr .
+docker run -p 8080:8080 \
+  -e PGHOST=your_host -e PGPORT=5432 -e PGDATABASE=thejobtrackr \
+  -e PGUSER=your_user -e PGPASSWORD=your_password \
+  -e GROQ_KEY=your_groq_api_key \
+  thejobtrackr
+```
 
 ## Features
 *   **User Management:** Complete CRUD operations for managing platform users with validation and profile handling.
 *   **Company Management:** Create, update, retrieve, and delete companies associated with job applications.
 *   **Job Application Tracking:** Track job applications through different recruitment stages with status management.
+*   **Pagination:** List endpoints support paged results via Spring Data's `Pageable`, returning metadata such as total elements and total pages.
+*   **Application Statistics:** Dedicated endpoint summarizing job applications by status.
 *   **RESTful API:** Well-structured REST API following clean architecture principles and best practices.
 *   **Swagger Documentation:** Integrated Swagger/OpenAPI documentation for easy endpoint testing and exploration.
 *   **AI Integration:** Groq AI integration ready for intelligent job application analysis and future AI-powered features.
@@ -86,6 +107,7 @@
 *   **Testing:** Writing unit tests with JUnit, Mockito, and parameterized testing for service layer reliability.
 *   **AI Integration:** Integrating Groq AI services and preparing the application for intelligent automation features.
 *   **DTO & Converter Pattern:** Separating internal entities from external API communication using DTOs and converters.
+*   **Containerization & Deployment:** Packaging the application with a multi-stage Dockerfile and deploying it to Render with a managed PostgreSQL instance, using environment variables for all sensitive configuration.
 
 ## Future Improvements
 - [ ] Add more tests
@@ -97,7 +119,6 @@
 - [ ] CV upload support
 - [ ] Interview scheduling
 - [ ] AI-powered job matching
-- [ ] Docker deployment
 - [ ] CI/CD pipeline
 
 ## Authors
